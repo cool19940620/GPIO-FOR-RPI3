@@ -9,8 +9,8 @@
 
 using namespace cv;        //cv::
 using namespace std;       //std::
-//int argc, char **argv
-int main()
+//
+int main(int argc, char **argv)
 {
     Mat image = imread("test.png", CV_LOAD_IMAGE_COLOR);
     namedWindow("test", CV_WINDOW_NORMAL);
