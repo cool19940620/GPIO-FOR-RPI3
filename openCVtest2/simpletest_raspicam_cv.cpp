@@ -3,7 +3,7 @@
 #include <iostream>
 #include <raspicam/raspicam_cv.h>
 using namespace std; 
-
+using namespace cv;
 int main ( int argc,char **argv ) 
 {
   time_t timer_begin,timer_end;
@@ -12,7 +12,10 @@ int main ( int argc,char **argv )
   int nCount=100;
   
   //set camera params
-  Camera.set( CV_CAP_PROP_FORMAT, CV_8UC1 );
+  Camera.set( CV_CAP_PROP_FORMAT, CV_8UC3 );
+  Camera.set( CV_CAP_PROP_FRAME_WIDTH, 1920 );
+  Camera.set( CV_CAP_PROP_FRAME_HEIGHT, 1080 );
+  
   
   //Open camera
   cout<<"Opening Camera..."<<endl;
@@ -25,6 +28,11 @@ int main ( int argc,char **argv )
   {
     Camera.grab();
     Camera.retrieve ( image);
+    
+    cv::namedWindow("test", CV_WINDOW_NORMAL);
+    cv::imshow("test", image);
+    waitKey(1);
+    
     if ( i%5==0 ) cout<<"\r captured "<<i<<" images"<<std::flush;
   }
   cout<<"Stop camera..."<<endl;
@@ -38,4 +46,8 @@ int main ( int argc,char **argv )
   //save image 
   cv::imwrite("raspicam_cv_image.jpg",image);
   cout<<"Image saved at raspicam_cv_image.jpg"<<endl;
+  
+  /*cv::namedWindow("test", CV_WINDOW_NORMAL);
+  cv::imshow("test", image);
+  waitKey(0);*/
 }
